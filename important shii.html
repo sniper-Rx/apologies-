@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apology for Kiya</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to top, #ffc1e3, #ffb6c1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Floating flowers */
+  .flower {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url('https://i.imgur.com/q6LZ5n2.png') no-repeat center/contain;
+    opacity: 0.8;
+    animation: float 10s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity:0; }
+    50% { opacity:1; }
+    100% { transform: translateY(-20vh) translateX(50px) rotate(360deg); opacity:0; }
+  }
+
+  /* Overlay question */
+  #overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 192, 203, 0.95);
+    z-index: 10;
+    text-align: center;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(255,0,128,0.5);
+  }
+
+  #overlay h1 {
+    color: #800080;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  #overlay button {
+    margin: 10px;
+    padding: 12px 25px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: #800080;
+    color: white;
+    transition: 0.3s;
+  }
+
+  #overlay button:hover {
+    background: #a020f0;
+  }
+
+  /* Envelope */
+  #envelope {
+    width: 200px;
+    height: 120px;
+    background: #ff6f91;
+    position: relative;
+    border-radius: 8px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 105, 145, 0.7);
+  }
+
+  #envelope::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 20px solid #ff6f91;
+  }
+
+  /* Burning animation */
+  @keyframes burn {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(0.8) rotate(10deg); opacity: 0.7; filter: blur(1px); }
+    100% { transform: scale(0) rotate(30deg); opacity: 0; }
+  }
+
+  .burn {
+    animation: burn 2s forwards;
+  }
+
+  /* Message */
+  #message {
+    display: none;
+    text-align: center;
+    max-width: 600px;
+    font-size: 1.3em;
+    color: #800080;
+    animation: fadeIn 2s forwards;
+    background: rgba(255, 192, 203, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255,0,128,0.5);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Envelope open animation */
+  @keyframes openEnvelope {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .open {
+    animation: openEnvelope 1s forwards;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating flowers -->
+<div id="flowers-container"></div>
+
+<!-- Overlay question -->
+<div id="overlay">
+  <h1>Kiya 💜</h1>
+  <p>Do you want to open my apology?</p>
+  <div>
+    <button onclick="openEnvelope()">Yes</button>
+    <button onclick="burnEnvelope()">No</button>
+  </div>
+</div>
+
+<!-- Envelope -->
+<div id="envelope">💌 Your Apology</div>
+
+<!-- Message -->
+<div id="message">
+  Dear Kiya,<br><br>
+  I want to sincerely apologize for going overboard in how I talk, for not showing enough appreciation, 
+  and for breaking my promises. I know this has hurt you, and I feel deeply sorry for it. 
+  I am committed to becoming a better partner and making amends. 💜
+</div>
+
+<script>
+  const overlay = document.getElementById('overlay');
+  const envelope = document.getElementById('envelope');
+  const message = document.getElementById('message');
+  const flowersContainer = document.getElementById('flowers-container');
+
+  // Create floating flowers
+  for(let i=0; i<15; i++){
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.animationDuration = (5 + Math.random()*10) + 's';
+    flower.style.width = flower.style.height = (20 + Math.random()*30) + 'px';
+    flowersContainer.appendChild(flower);
+  }
+
+  function openEnvelope() {
+    overlay.style.display = 'none';
+    envelope.style.display = 'flex';
+    envelope.classList.add('open');
+    setTimeout(() => {
+      envelope.style.display = 'none';
+      message.style.display = 'block';
+    }, 1000);
+  }
+
+  function burnEnvelope() {
+    overlay.style.display = 'none';
+    envelope.style.display = 'flex';
+    envelope.classList.add('burn');
+    setTimeout(() => {
+      envelope.style.display = 'none';
+      alert("The envelope burned… but my heart still wishes to apologize. 💜");
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
